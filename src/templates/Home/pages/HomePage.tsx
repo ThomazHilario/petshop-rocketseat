@@ -6,7 +6,7 @@ export const HomePage = () => (
     <Header />
 
     <Main className="max-w-217.75 m-auto">
-      Aqui eo nosso conteudo principal
+      <p className="text-paragraph-small">Aqui eo nosso conteudo principal</p>
     </Main>
   </div>
 );
