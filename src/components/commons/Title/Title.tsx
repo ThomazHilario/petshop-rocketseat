@@ -2,13 +2,15 @@ import { ComponentProps, createElement } from 'react';
 import { tv, VariantProps } from 'tailwind-variants';
 
 const TitleVariants = tv({
-  base: 'text-white tracking-tight m-0 p-0',
+  base: 'text-content-primary tracking-tight m-0 p-0 font-semibold',
   variants: {
     variant: {
       primary: 'text-content-brand',
     },
     size: {
-      sm: 'text-md',
+      sm: 'text-2xl',
+      md: 'text-3xl',
+      lg: 'text-4xl',
     },
   },
   defaultVariants: {
@@ -27,11 +29,12 @@ export const Title = ({
   as,
   className,
   variant,
+  size,
   children,
   ...props
 }: TitleProps) =>
   createElement(
     as,
-    { className: TitleVariants({ className, variant }), ...props },
+    { className: TitleVariants({ className, variant, size }), ...props },
     children,
   );
