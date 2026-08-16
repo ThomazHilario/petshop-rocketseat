@@ -1,6 +1,7 @@
 import { Main, Title, Text } from '@/components/commons';
 import { Header } from '../components';
 import { AppointmentCard } from '../components/AppointmentCard';
+import { DialogAddAppointment } from '../components/DialogAddAppointment/DialogAddAppointment';
 
 export const HomePage = () => (
   <div className="bg-background-primary min-h-screen">
@@ -32,6 +33,8 @@ export const HomePage = () => (
           ]}
         />
       </section>
+
+      <DialogAddAppointment />
     </Main>
   </div>
 );
