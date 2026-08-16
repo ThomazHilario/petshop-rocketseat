@@ -1,5 +1,6 @@
 import { Main, Title, Text } from '@/components/commons';
 import { Header } from '../components';
+import { AppointmentCard } from '../components/AppointmentCard';
 
 export const HomePage = () => (
   <div className="bg-background-primary min-h-screen">
@@ -19,7 +20,18 @@ export const HomePage = () => (
         </div>
       </div>
 
-      <section arial-label="Seção de agendamentos">appointments</section>
+      <section arial-label="Seção de agendamentos">
+        <AppointmentCard
+          appointments={[
+            {
+              date: new Date(),
+              petName: 'marrudo',
+              petOwner: 'Thomaz',
+              service: 'vacinacao',
+            },
+          ]}
+        />
+      </section>
     </Main>
   </div>
 );

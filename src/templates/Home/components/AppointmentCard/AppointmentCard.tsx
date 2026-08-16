@@ -1,4 +1,5 @@
 import { Appointment } from '@/api';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { AppointmentCardItem } from './AppointmentCardItem';
 
 type AppointmentCardProps = {
@@ -6,15 +7,17 @@ type AppointmentCardProps = {
 };
 
 export const AppointmentCard = ({ appointments }: AppointmentCardProps) => (
-  <div>
-    <div></div>
+  <Card>
+    <CardHeader>
+      <CardTitle>manha</CardTitle>
+    </CardHeader>
 
-    <div>
+    <CardContent>
       <div>
         {appointments.map((appointment, index) => (
           <AppointmentCardItem key={index} appointment={appointment} />
         ))}
       </div>
-    </div>
-  </div>
+    </CardContent>
+  </Card>
 );
