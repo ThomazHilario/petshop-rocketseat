@@ -9,19 +9,19 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-type FormFieldProps<T extends FieldValues> = {
+type FormTextAreaFieldProps<T extends FieldValues> = {
   label: string;
   name: FieldPath<T>;
   placeholder: string;
   Icon?: ReactNode;
 };
 
-export const FormField = <T extends FieldValues>({
+export const FormTextAreaField = <T extends FieldValues>({
   label,
   name,
   placeholder,
   Icon,
-}: FormFieldProps<T>) => {
+}: FormTextAreaFieldProps<T>) => {
   const { control } = useFormContext();
 
   return (
@@ -37,9 +37,10 @@ export const FormField = <T extends FieldValues>({
           control={control}
           name={name}
           render={({ field: { onChange, onBlur, value } }) => (
-            <input
+            <textarea
               id={name}
-              className="flex-1 border-0 outline-0"
+              className="flex-1 border-0 outline-0 resize-none"
+              rows={3}
               placeholder={placeholder}
               onChange={onChange}
               onBlur={onBlur}

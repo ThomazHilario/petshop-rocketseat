@@ -1,4 +1,6 @@
-import { PropsWithChildren } from 'react';
+'use client';
+
+import { ComponentProps, PropsWithChildren } from 'react';
 import {
   FormProvider,
   SubmitHandler,
@@ -6,18 +8,21 @@ import {
   type FieldValues,
 } from 'react-hook-form';
 
-type FormProps<T extends FieldValues> = PropsWithChildren<{
+type FormProps<T extends FieldValues> = ComponentProps<'form'> & {
   className?: string;
   form: UseFormReturn<T>;
   onSubmit: SubmitHandler<T>;
-}>;
+};
 
 export const Form = <T extends FieldValues>({
   children,
   form,
   onSubmit,
+  ...props
 }: FormProps<T>) => (
   <FormProvider {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)}>{children}</form>
+    <form onSubmit={form.handleSubmit(onSubmit)} {...props}>
+      {children}
+    </form>
   </FormProvider>
 );
