@@ -3,7 +3,7 @@ import { ComponentProps } from 'react';
 import { tv, VariantProps } from 'tailwind-variants';
 
 const buttonVariants = tv({
-  base: 'cursor-pointer',
+  base: 'cursor-pointer flex items-center justify-center',
   variants: {
     variant: {
       primary: 'text-white rounded-lg border-2 border-border-primary',

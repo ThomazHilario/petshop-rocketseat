@@ -13,6 +13,7 @@ import {
 
 import {
   Button,
+  DatePicker,
   Dialog,
   DialogContent,
   DialogDescription,
@@ -70,6 +71,11 @@ export const DialogAddAppointment = () => {
             label="Descrição do serviço"
             placeholder="Banho e tosa"
             name="service"
+          />
+
+          <DatePicker
+            selected={new Date()}
+            onSelect={() => console.log(`oi`)}
           />
 
           <Button className="block ml-auto" variant="brand" type="submit">
