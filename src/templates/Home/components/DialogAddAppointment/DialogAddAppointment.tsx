@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import {
   Form,
+  FormDatePicker,
   FormField,
   FormTextAreaField,
   PawIcon,
@@ -13,19 +14,32 @@ import {
 
 import {
   Button,
-  DatePicker,
   Dialog,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
+
+const APPOINTMENT_DEFAULT_VALUES = {
+  tutorName: '',
+  petName: '',
+  phone: '',
+  service: '',
+  date: new Date(),
+};
 
 export const DialogAddAppointment = () => {
-  const form = useForm();
+  const form = useForm<AppointmentSchemaType>({
+    resolver: zodResolver(AppointmentSchema),
+    defaultValues: APPOINTMENT_DEFAULT_VALUES,
+  });
 
-  const onAddAppointment = () => {
-    console.log('oi');
+  const onAddAppointment = (data: AppointmentSchemaType) => {
+    console.log(data);
   };
 
   return (
@@ -34,7 +48,7 @@ export const DialogAddAppointment = () => {
         Novo Agendamento
       </DialogTrigger>
 
-      <DialogContent className="max-h-179 space-y-7">
+      <DialogContent className="min-h-179 space-y-7">
         <section className="space-y-2">
           <DialogTitle className="text-xl sm:text-[1.5rem]">
             Agende um atendimento
@@ -73,10 +87,7 @@ export const DialogAddAppointment = () => {
             name="service"
           />
 
-          <DatePicker
-            selected={new Date()}
-            onSelect={() => console.log(`oi`)}
-          />
+          <FormDatePicker label="Data" name="date" />
 
           <Button className="block ml-auto" variant="brand" type="submit">
             Agendar

@@ -1,14 +1,17 @@
 'use client';
 
-import { ComponentProps, PropsWithChildren } from 'react';
+import { ComponentProps } from 'react';
 import {
   FormProvider,
-  SubmitHandler,
-  UseFormReturn,
+  type SubmitHandler,
+  type UseFormReturn,
   type FieldValues,
 } from 'react-hook-form';
 
-type FormProps<T extends FieldValues> = ComponentProps<'form'> & {
+type FormProps<T extends FieldValues> = Omit<
+  ComponentProps<'form'>,
+  'onSubmit'
+> & {
   className?: string;
   form: UseFormReturn<T>;
   onSubmit: SubmitHandler<T>;

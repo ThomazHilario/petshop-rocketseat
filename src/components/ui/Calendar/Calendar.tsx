@@ -1,43 +1,50 @@
 'use client';
 
 import { cn } from '@/utils';
-import { DayPicker, getDefaultClassNames } from 'react-day-picker';
+import {
+  DayPicker,
+  DayPickerProps,
+  getDefaultClassNames,
+} from 'react-day-picker';
 
-type CalendarProps = {
-  selected: Date;
-  onSelect: () => void;
-};
+type CalendarProps = DayPickerProps;
 
-export const Calendar = ({ selected, onSelect }: CalendarProps) => {
+export const Calendar = ({ ...props }: CalendarProps) => {
   const defaultClassNames = getDefaultClassNames();
-  const captionLayout = 'label';
 
   return (
     <DayPicker
-      animate
+      onDayClick={(date) => console.log(date)}
       classNames={{
-        root: cn('w-100 h-40', defaultClassNames.root),
+        root: cn('w-auto h-auto', defaultClassNames.root),
         months: cn('relative flex flex-col gap-10', defaultClassNames.months),
-        month: cn('text-white'),
-        caption_label: cn('font-medium select-none'),
+        month: cn('text-white', defaultClassNames.month),
+        caption_label: cn(
+          'font-medium select-none',
+          defaultClassNames.caption_label,
+        ),
         caption_before_exit: 'hidden',
         caption_after_exit: 'hidden',
-        month_caption: cn(
-          'flex h-(--cell-size) w-full items-center justify-center px-(--cell-size)',
-        ),
+        month_caption: cn('mb-5'),
         nav: cn(
-          'absolute inset-x-0 top-0 flex items-center gap-1 left-89',
+          'absolute inset-x-0 top-0 flex items-center gap-1 left-2/4 translate-x-2/4',
           defaultClassNames.nav,
         ),
-        button_next: cn('fill-content-brand', defaultClassNames.button_next),
+        button_next: cn('fill-content-brand!', defaultClassNames.button_next),
         button_previous: cn(
-          'fill-content-brand',
+          'fill-content-brand!',
           defaultClassNames.button_previous,
         ),
+        month_grid:
+          'relative flex flex-col gap-4 w-full h-full text-center overflow-hidden',
+        day_button: 'h-8 w-8 cursor-pointer',
+        weekdays: 'flex-1',
+        weekday: 'h-8 w-8',
+        weeks: cn('relative', defaultClassNames.weeks),
+        week: cn('relative', defaultClassNames.week),
       }}
-      selected={selected}
-      onSelect={onSelect}
       mode="single"
+      {...props}
     />
   );
 };
