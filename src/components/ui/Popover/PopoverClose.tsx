@@ -13,6 +13,7 @@ export const PopoverClose = ({
       !asChild && 'cursor-pointer py-3 px-6 text-center',
       className,
     )}
+    data-slot="popover-close"
     {...props}
   />
 );

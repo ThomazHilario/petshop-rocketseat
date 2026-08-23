@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 
 import { cn } from '@/utils';
+import { ClockIcon } from '../Icons';
 
 type ValuesProps = {
   label: string;
@@ -42,19 +43,23 @@ export const FormTimePicker = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field: { onChange, onBlur, value } }) => (
-          <select
-            className="flex h-full w-full gap-2 items-center border-2 border-border-primary rounded-lg p-3"
-            onSelect={(e) => console.log(e)}
-            onChange={onChange}
-            onBlur={onBlur}
-            value={value}
-          >
-            {values.map((option, index) => (
-              <option key={index} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+          <div className="relative flex h-full w-full gap-2 items-center border-2 border-border-primary rounded-lg">
+            <ClockIcon className="text-content-brand absolute left-2.5 top-1/2 -translate-y-1/2" />
+
+            <select
+              className="w-full h-full absolute px-9.5 cursor-pointer"
+              id={name}
+              onChange={onChange}
+              onBlur={onBlur}
+              value={value}
+            >
+              {values.map((option, index) => (
+                <option key={index} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         )}
       />
     </div>

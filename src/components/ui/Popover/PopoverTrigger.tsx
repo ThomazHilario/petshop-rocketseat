@@ -13,6 +13,8 @@ export const PopoverTrigger = ({
       !asChild && 'cursor-pointer py-3 px-6 text-center',
       className,
     )}
+    asChild
+    data-slot="popover-trigger"
     {...props}
   />
 );

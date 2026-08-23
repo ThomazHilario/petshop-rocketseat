@@ -9,6 +9,7 @@ import {
 } from 'react-hook-form';
 
 import {
+  Button,
   Calendar,
   Popover,
   PopoverContent,
@@ -48,10 +49,10 @@ export const FormDatePicker = <T extends FieldValues>({
 
       <Popover>
         <PopoverTrigger asChild>
-          <div className="flex w-full gap-2 items-center border-2 border-border-primary rounded-lg p-3">
+          <Button className="justify-start gap-2.5">
             <CalendarIcon className="text-content-brand" />
             {field.value ? formatDate(field.value, 'yyyy-MM-dd') : placeholder}
-          </div>
+          </Button>
         </PopoverTrigger>
 
         <PopoverContent>

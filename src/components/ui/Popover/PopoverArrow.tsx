@@ -8,5 +8,9 @@ export const PopoverArrow = ({
   asChild,
   ...props
 }: PopoverArrowProps) => (
-  <PopoverPrimitive.Arrow className={cn(className)} {...props} />
+  <PopoverPrimitive.Arrow
+    className={cn(className)}
+    data-slot="popover-arrow"
+    {...props}
+  />
 );

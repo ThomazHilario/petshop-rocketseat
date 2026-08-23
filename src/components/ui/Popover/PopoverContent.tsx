@@ -14,6 +14,7 @@ export const PopoverContent = ({
       'transition-all rounded-sm px-5 py-5 bg-background-secondary data-[state=open]:animate-in data-[state=open]:slide-in-from-bottom-30 duration-400',
       className,
     )}
+    data-slot="popover-content"
     sideOffset={10}
     {...props}
   >

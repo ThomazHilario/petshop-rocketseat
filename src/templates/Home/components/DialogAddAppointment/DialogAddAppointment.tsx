@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { formatISO, parse } from 'date-fns';
+import { formatISO } from 'date-fns';
 
 import {
   Form,
@@ -94,6 +94,7 @@ export const DialogAddAppointment = () => {
 
           <div className="flex gap-4">
             <FormDatePicker className="flex-1" label="Data" name="date" />
+
             <FormTimePicker
               className="flex-1"
               label="Hora"
