@@ -26,11 +26,11 @@ export const FormTextAreaField = <T extends FieldValues>({
 
   return (
     <div className="flex flex-col gap-2">
-      <label className="text-label-medium" htmlFor={name}>
+      <label className="text-label-medium w-fit" htmlFor={name}>
         {label}
       </label>
 
-      <div className="flex gap-2 items-center border-2 border-border-primary rounded-lg p-3">
+      <div className="flex gap-2 items-center border-2 border-border-primary has-[textarea:focus-within]:outline-2 has-[textarea:focus-within]:-outline-offset-2 has-[textarea:focus-within]:outline-content-brand rounded-lg p-3">
         {Icon && Icon}
 
         <Controller
