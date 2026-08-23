@@ -49,7 +49,7 @@ export const FormDatePicker = <T extends FieldValues>({
 
       <Popover>
         <PopoverTrigger asChild>
-          <Button className="justify-start gap-2.5">
+          <Button className="justify-start gap-2.5 py-0 h-13">
             <CalendarIcon className="text-content-brand" />
             {field.value ? formatDate(field.value, 'yyyy-MM-dd') : placeholder}
           </Button>

@@ -21,6 +21,9 @@ import {
   DialogDescription,
   DialogTitle,
   DialogTrigger,
+  ScrollArea,
+  ScrollAreaScrollbar,
+  ScrollAreaViewport,
 } from '@/components/ui';
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -53,7 +56,7 @@ export const DialogAddAppointment = () => {
         Novo Agendamento
       </DialogTrigger>
 
-      <DialogContent className="min-h-179 space-y-7">
+      <DialogContent className="min-h-fit space-y-7">
         <section className="space-y-2">
           <DialogTitle className="text-xl sm:text-[1.5rem]">
             Agende um atendimento
@@ -64,49 +67,55 @@ export const DialogAddAppointment = () => {
           </DialogDescription>
         </section>
 
-        <Form className="space-y-4" form={form} onSubmit={onAddAppointment}>
-          <FormField
-            label="Nome do tutor"
-            placeholder="Helena Souza"
-            name="tutorName"
-            Icon={<UserIcon className="text-content-brand" />}
-          />
+        <ScrollArea>
+          <ScrollAreaViewport className="max-h-110 md:min-h-153 p-2">
+            <Form className="space-y-4" form={form} onSubmit={onAddAppointment}>
+              <FormField
+                label="Nome do tutor"
+                placeholder="Helena Souza"
+                name="tutorName"
+                Icon={<UserIcon className="text-content-brand" />}
+              />
 
-          <FormField
-            label="Nome do pet"
-            placeholder="Cheddar"
-            name="petName"
-            Icon={<PawIcon className="text-content-brand" />}
-          />
+              <FormField
+                label="Nome do pet"
+                placeholder="Cheddar"
+                name="petName"
+                Icon={<PawIcon className="text-content-brand" />}
+              />
 
-          <FormField
-            label="Telefone"
-            placeholder="(00) 0 0000-0000"
-            name="phone"
-            Icon={<PhoneIcon className="text-content-brand" />}
-          />
+              <FormField
+                label="Telefone"
+                placeholder="(00) 0 0000-0000"
+                name="phone"
+                Icon={<PhoneIcon className="text-content-brand" />}
+              />
 
-          <FormTextAreaField
-            label="Descrição do serviço"
-            placeholder="Banho e tosa"
-            name="service"
-          />
+              <FormTextAreaField
+                label="Descrição do serviço"
+                placeholder="Banho e tosa"
+                name="service"
+              />
 
-          <div className="flex gap-4">
-            <FormDatePicker className="flex-1" label="Data" name="date" />
+              <div className="flex flex-col gap-4 md:flex-row">
+                <FormDatePicker className="flex-1" label="Data" name="date" />
 
-            <FormTimePicker
-              className="flex-1"
-              label="Hora"
-              name="time"
-              values={APPOINTMENT_TIME_VALUES}
-            />
-          </div>
+                <FormTimePicker
+                  className="flex-1"
+                  label="Hora"
+                  name="time"
+                  values={APPOINTMENT_TIME_VALUES}
+                />
+              </div>
 
-          <Button className="block ml-auto" variant="brand" type="submit">
-            Agendar
-          </Button>
-        </Form>
+              <Button className="block ml-auto" variant="brand" type="submit">
+                Agendar
+              </Button>
+            </Form>
+          </ScrollAreaViewport>
+
+          <ScrollAreaScrollbar orientation="vertical" />
+        </ScrollArea>
       </DialogContent>
     </Dialog>
   );
