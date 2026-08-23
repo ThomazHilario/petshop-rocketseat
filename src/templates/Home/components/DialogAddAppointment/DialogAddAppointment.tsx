@@ -1,12 +1,14 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { formatISO, parse } from 'date-fns';
 
 import {
   Form,
   FormDatePicker,
   FormField,
   FormTextAreaField,
+  FormTimePicker,
   PawIcon,
   PhoneIcon,
   UserIcon,
@@ -24,12 +26,15 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
+import { APPOINTMENT_TIME_VALUES } from '@/config';
+
 const APPOINTMENT_DEFAULT_VALUES = {
   tutorName: '',
   petName: '',
   phone: '',
   service: '',
   date: new Date(),
+  time: '',
 };
 
 export const DialogAddAppointment = () => {
@@ -39,7 +44,7 @@ export const DialogAddAppointment = () => {
   });
 
   const onAddAppointment = (data: AppointmentSchemaType) => {
-    console.log(data);
+    console.log(formatISO(data.date.setHours(Number(data.time), 0, 0, 0)));
   };
 
   return (
@@ -87,7 +92,15 @@ export const DialogAddAppointment = () => {
             name="service"
           />
 
-          <FormDatePicker label="Data" name="date" />
+          <div className="flex gap-4">
+            <FormDatePicker className="flex-1" label="Data" name="date" />
+            <FormTimePicker
+              className="flex-1"
+              label="Hora"
+              name="time"
+              values={APPOINTMENT_TIME_VALUES}
+            />
+          </div>
 
           <Button className="block ml-auto" variant="brand" type="submit">
             Agendar

@@ -18,16 +18,19 @@ import {
 import { CalendarIcon } from '../Icons';
 
 import { formatDate } from 'date-fns';
+import { cn } from '@/utils';
 
 type FormDatePickerProps<T extends FieldValues> = {
   label: string;
   name: FieldPath<T>;
+  className?: string;
   placeholder?: string;
 };
 
 export const FormDatePicker = <T extends FieldValues>({
   label,
   name,
+  className,
   placeholder = 'Selecione a data',
 }: FormDatePickerProps<T>) => {
   const { control } = useFormContext<T>();
@@ -38,7 +41,7 @@ export const FormDatePicker = <T extends FieldValues>({
   });
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={cn('flex flex-col gap-2', className)}>
       <label className="text-label-medium" htmlFor={name}>
         {label}
       </label>

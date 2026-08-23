@@ -6,6 +6,7 @@ export const AppointmentSchema = z.object({
   phone: z.string(),
   service: z.string(),
   date: z.date(),
+  time: z.string(),
 });
 
 export type AppointmentSchemaType = z.infer<typeof AppointmentSchema>;
