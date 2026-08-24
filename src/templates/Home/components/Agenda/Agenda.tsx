@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { Text, Title } from '@/components/commons';
 import { Datepicker } from '@/components/ui';
 import { useDateFilterContext } from '../../Context';
+import { FilteredAppointments } from '../../utils';
 
 export const Agenda = () => {
   const { date, setDate } = useDateFilterContext();

@@ -1,6 +1,6 @@
 export type Appointment = {
+  tutorName: string;
   petName: string;
-  petOwner: string;
   service: string;
   date: Date;
 };

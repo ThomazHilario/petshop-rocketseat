@@ -47,7 +47,7 @@ export const DialogAddAppointment = () => {
   });
 
   const onAddAppointment = (data: AppointmentSchemaType) => {
-    console.log(formatISO(data.date.setHours(Number(data.time), 0, 0, 0)));
+    console.log(new Date('2026-08-23T00:00:00-03:00').getDate());
   };
 
   return (

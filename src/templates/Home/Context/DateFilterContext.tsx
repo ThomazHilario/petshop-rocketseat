@@ -10,8 +10,8 @@ import {
 } from 'react';
 
 type DateFilterProps = {
-  date: Date | undefined;
-  setDate: Dispatch<SetStateAction<Date | undefined>>;
+  date: Date;
+  setDate: Dispatch<SetStateAction<Date>>;
 };
 
 type DateFilterProviderProps = {
@@ -21,7 +21,7 @@ type DateFilterProviderProps = {
 const DateFilterContext = createContext<DateFilterProps | null>(null);
 
 export const DateFilterProvider = ({ children }: DateFilterProviderProps) => {
-  const [date, setDate] = useState<Date | undefined>();
+  const [date, setDate] = useState<Date>(new Date());
 
   return (
     <DateFilterContext.Provider value={{ date, setDate }}>

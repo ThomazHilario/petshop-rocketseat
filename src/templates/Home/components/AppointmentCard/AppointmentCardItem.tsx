@@ -23,7 +23,7 @@ export const AppointmentCardItem = ({
           {appointment.petName}
         </Text>
         <Text className="before:ml-2" size="md" variant="secondary">
-          {appointment.petOwner}
+          {appointment.tutorName}
         </Text>
       </div>
     </section>

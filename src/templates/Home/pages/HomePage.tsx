@@ -2,7 +2,7 @@
 
 import { Main } from '@/components/commons';
 
-import { Agenda, Header } from '../components';
+import { Agenda, AppointmentList, Header } from '../components';
 import { AppointmentCard } from '../components/AppointmentCard';
 import { DialogAddAppointment } from '../components/DialogAddAppointment/DialogAddAppointment';
 
@@ -16,17 +16,8 @@ export const HomePage = () => (
       <Main className="max-w-217.75 m-auto space-y-5">
         <Agenda />
 
-        <section arial-label="Seção de agendamentos">
-          <AppointmentCard
-            appointments={[
-              {
-                date: new Date(),
-                petName: 'marrudo',
-                petOwner: 'Thomaz',
-                service: 'vacinacao',
-              },
-            ]}
-          />
+        <section className="space-y-4" arial-label="Seção de agendamentos">
+          <AppointmentList />
         </section>
 
         <DialogAddAppointment />

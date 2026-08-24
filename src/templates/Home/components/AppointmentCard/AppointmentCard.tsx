@@ -3,13 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui';
 import { AppointmentCardItem } from './AppointmentCardItem';
 
 type AppointmentCardProps = {
+  title: string;
   appointments: Appointment[];
 };
 
-export const AppointmentCard = ({ appointments }: AppointmentCardProps) => (
+export const AppointmentCard = ({
+  title,
+  appointments,
+}: AppointmentCardProps) => (
   <Card>
     <CardHeader>
-      <CardTitle>manha</CardTitle>
+      <CardTitle>{title}</CardTitle>
     </CardHeader>
 
     <CardContent>
