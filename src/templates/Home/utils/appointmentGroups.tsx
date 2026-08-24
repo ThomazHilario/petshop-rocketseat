@@ -1,6 +1,8 @@
 import { FilteredAppointments } from './filteredAppointments';
 
-export const appointmentGroups = (appointments, date) => {
+import { Appointment } from '@/api';
+
+export const appointmentGroups = (appointments: Appointment[], date: Date) => {
   const appointmentsFiltered = FilteredAppointments(appointments, date);
 
   return [

@@ -1,19 +1,14 @@
 import { format } from 'date-fns';
 
-type appointmentProps = {
-  tutorName: string;
-  petName: string;
-  service: string;
-  date: string;
-};
+import { Appointment } from '@/api';
 
 export const FilteredAppointments = (
-  appointments: appointmentProps[],
+  appointments: Appointment[],
   dateToday: Date,
 ) => {
-  const morning: appointmentProps[] = [];
-  const afternoon: appointmentProps[] = [];
-  const evening: appointmentProps[] = [];
+  const morning: Appointment[] = [];
+  const afternoon: Appointment[] = [];
+  const evening: Appointment[] = [];
 
   appointments.forEach((appointment) => {
     const appointmentDate = format(appointment.date, 'dd/MM/yyyy');

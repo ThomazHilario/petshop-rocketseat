@@ -1,8 +1,9 @@
+import { Appointment } from '@/api';
 import { useDateFilterContext } from '../../Context';
 import { appointmentGroups } from '../../utils';
 import { AppointmentCard } from '../AppointmentCard';
 
-const appointments = [
+const appointments: Appointment[] = [
   {
     tutorName: 'Mariana Silva',
     petName: 'Rex',
@@ -59,10 +60,11 @@ export const AppointmentList = () => {
 
   return (
     <>
-      {appointmentsGroups.map((appointmentsGroups) => (
+      {appointmentsGroups.map((appointmentsGroup, index) => (
         <AppointmentCard
-          title={appointmentsGroups.title}
-          appointments={appointmentsGroups.appointments}
+          key={`${appointmentsGroup.title}-${index}`}
+          title={appointmentsGroup.title}
+          appointments={appointmentsGroup.appointments}
         />
       ))}
     </>
