@@ -1,11 +1,12 @@
 'use client';
 
-import { cn } from '@/utils';
 import {
   DayPicker,
   DayPickerProps,
   getDefaultClassNames,
 } from 'react-day-picker';
+
+import { cn } from '@/utils';
 
 type CalendarProps = DayPickerProps;
 
@@ -14,7 +15,6 @@ export const Calendar = ({ ...props }: CalendarProps) => {
 
   return (
     <DayPicker
-      onDayClick={(date) => console.log(date)}
       classNames={{
         root: cn('w-auto h-auto', defaultClassNames.root),
         months: cn('relative flex flex-col gap-10', defaultClassNames.months),
@@ -37,13 +37,12 @@ export const Calendar = ({ ...props }: CalendarProps) => {
         ),
         month_grid:
           'relative flex flex-col gap-4 w-full h-full text-center overflow-hidden',
-        day_button: 'h-8 w-8 cursor-pointer',
+        day_button: 'h-8 w-8 cursor-pointer disabled:opacity-9',
         weekdays: 'flex-1',
         weekday: 'h-8 w-8',
         weeks: cn('relative', defaultClassNames.weeks),
         week: cn('relative', defaultClassNames.week),
       }}
-      mode="single"
       {...props}
     />
   );
