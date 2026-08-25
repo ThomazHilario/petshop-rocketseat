@@ -10,28 +10,30 @@ export const FilteredAppointments = (
   const afternoon: Appointment[] = [];
   const evening: Appointment[] = [];
 
-  appointments.forEach((appointment) => {
-    const appointmentDate = format(appointment.date, 'dd/MM/yyyy');
+  if (appointments) {
+    appointments.forEach((appointment) => {
+      const appointmentDate = format(appointment.date, 'dd/MM/yyyy');
 
-    if (appointmentDate === format(dateToday, 'dd/MM/yyyy')) {
-      const appointmentTime = new Date(appointment.date).getHours();
+      if (appointmentDate === format(dateToday, 'dd/MM/yyyy')) {
+        const appointmentTime = new Date(appointment.date).getHours();
 
-      if (appointmentTime >= 9 && appointmentTime <= 12) {
-        morning.push(appointment);
-        return;
+        if (appointmentTime >= 9 && appointmentTime <= 12) {
+          morning.push(appointment);
+          return;
+        }
+
+        if (appointmentTime >= 13 && appointmentTime <= 18) {
+          afternoon.push(appointment);
+          return;
+        }
+
+        if (appointmentTime >= 19 && appointmentTime <= 21) {
+          evening.push(appointment);
+          return;
+        }
       }
-
-      if (appointmentTime >= 13 && appointmentTime <= 18) {
-        afternoon.push(appointment);
-        return;
-      }
-
-      if (appointmentTime >= 19 && appointmentTime <= 21) {
-        evening.push(appointment);
-        return;
-      }
-    }
-  });
+    });
+  }
 
   return {
     morning,
