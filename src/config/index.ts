@@ -1,14 +1,35 @@
 const START_HOUR = 9;
-const END_HOUR = 21;
+const END_HOUR = 21 * 6;
+const INTERVAL = 30;
 
-export const APPOINTMENT_TIME_VALUES = Array.from(
-  { length: END_HOUR - START_HOUR + 1 },
-  (_, i) => {
-    const hour = START_HOUR + i;
+function generateOptions(initial = '09:00', fim = '21:00', interval = 30) {
+  const hours = [];
 
-    return {
-      label: `${String(hour).padStart(2, '0')}:00`,
-      value: hour,
-    };
-  },
-);
+  const [initialHour, initialMinute] = initial.split(':').map(Number);
+  const [endHour, endMinute] = fim.split(':').map(Number);
+
+  const initialMinutesTotal = initialHour * 60 + initialMinute;
+  const endMinutesTotal = endHour * 60 + endMinute;
+
+  for (
+    let minutos = initialMinutesTotal;
+    minutos <= endMinutesTotal;
+    minutos += interval
+  ) {
+    const hour = Math.floor(minutos / 60);
+    const minute = minutos % 60;
+
+    const horaFormatada = String(hour).padStart(2, '0');
+    const minutoFormatado = String(minute).padStart(2, '0');
+    const value = `${horaFormatada}:${minutoFormatado}`;
+
+    hours.push({
+      label: value,
+      value: value,
+    });
+  }
+
+  return hours;
+}
+
+export const APPOINTMENTS_OPTIONS = generateOptions();

@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { getHours, getMinutes, getDate } from 'date-fns';
+import { getHours, getMinutes } from 'date-fns';
 
 import {
   Form,
@@ -29,7 +29,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
-import { APPOINTMENT_TIME_VALUES } from '@/config';
+import { APPOINTMENTS_OPTIONS } from '@/config';
 import { Appointment } from '@/api';
 
 type EditAppointmentDialogProps = {
@@ -39,7 +39,7 @@ type EditAppointmentDialogProps = {
 const formatData = (data: Appointment): AppointmentSchemaType => ({
   ...data,
   date: new Date(data.date),
-  time: `${getHours(data.date)}`,
+  time: `${getHours(data.date)}:${getMinutes(data.date)}`,
 });
 
 export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
@@ -49,7 +49,7 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
   });
 
   const onEditAppointment = (data: AppointmentSchemaType) => {
-    console.log(data);
+    console.log(`${getHours(data.date)}:${getMinutes(data.date)}`);
   };
 
   return (
@@ -111,7 +111,7 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
                   className="flex-1"
                   label="Hora"
                   name="time"
-                  values={APPOINTMENT_TIME_VALUES}
+                  values={APPOINTMENTS_OPTIONS}
                 />
               </div>
 

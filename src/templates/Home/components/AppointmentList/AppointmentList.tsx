@@ -1,7 +1,9 @@
 import { Appointment } from '@/api';
+
+import { AppointmentCard } from '../AppointmentCard';
+
 import { useDateFilterContext } from '../../Context';
 import { appointmentGroups } from '../../utils';
-import { AppointmentCard } from '../AppointmentCard';
 
 const appointments: Appointment[] = [
   {

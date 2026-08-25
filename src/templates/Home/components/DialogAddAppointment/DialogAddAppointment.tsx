@@ -1,7 +1,6 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { formatISO } from 'date-fns';
 
 import {
   Form,
@@ -29,7 +28,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
-import { APPOINTMENT_TIME_VALUES } from '@/config';
+import { APPOINTMENTS_OPTIONS } from '@/config';
+import { getLocalStorage, setLocalStorage } from '@/utils';
+import { dateFormat } from '../../utils';
+import { Appointment } from '@/api';
 
 const APPOINTMENT_DEFAULT_VALUES = {
   tutorName: '',
@@ -37,7 +39,7 @@ const APPOINTMENT_DEFAULT_VALUES = {
   phone: '',
   service: '',
   date: new Date(),
-  time: '',
+  time: '09:00',
 };
 
 export const DialogAddAppointment = () => {
@@ -47,7 +49,18 @@ export const DialogAddAppointment = () => {
   });
 
   const onAddAppointment = (data: AppointmentSchemaType) => {
-    console.log(new Date('2026-08-23T00:00:00-03:00').getDate());
+    const appointments: Appointment[] = getLocalStorage('appointments') || [];
+
+    setLocalStorage('appointments', [
+      ...appointments,
+      {
+        tutorName: data.tutorName,
+        petName: data.petName,
+        phone: data.phone,
+        service: data.service,
+        date: dateFormat(data.date, data.time),
+      },
+    ]);
   };
 
   return (
@@ -104,7 +117,7 @@ export const DialogAddAppointment = () => {
                   className="flex-1"
                   label="Hora"
                   name="time"
-                  values={APPOINTMENT_TIME_VALUES}
+                  values={APPOINTMENTS_OPTIONS}
                 />
               </div>
 
