@@ -2,7 +2,6 @@ import { Appointment } from '@/api';
 import { useDateFilterContext } from '../../Context';
 import { appointmentGroups } from '../../utils';
 import { AppointmentCard } from '../AppointmentCard';
-import { getLocalStorage } from '@/utils';
 
 const appointments: Appointment[] = [
   {
@@ -65,8 +64,7 @@ const appointments: Appointment[] = [
 
 export const AppointmentList = (appointments: Appointment[]) => {
   const { date } = useDateFilterContext();
-  const appointmentsStorage = getLocalStorage('appointments');
-  const appointmentsGroups = appointmentGroups(appointmentsStorage || [], date);
+  const appointmentsGroups = appointmentGroups(appointments || [], date);
 
   return (
     <>
