@@ -4,7 +4,8 @@ export const setLocalStorage = (key: string, value: unknown) =>
 export const getLocalStorage = (key: string) => {
   const appointments = localStorage.getItem('appointments');
 
-  const parsed = JSON.parse(appointments!);
-
-  return parsed;
+  if (appointments) {
+    const parsed = JSON.parse(appointments);
+    return parsed;
+  }
 };
