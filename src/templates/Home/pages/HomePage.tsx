@@ -3,7 +3,6 @@
 import { Main } from '@/components/commons';
 
 import { Agenda, AppointmentList, Header } from '../components';
-import { AppointmentCard } from '../components/AppointmentCard';
 import { DialogAddAppointment } from '../components/DialogAddAppointment/DialogAddAppointment';
 
 import { DateFilterProvider } from '@/templates/Home/Context';

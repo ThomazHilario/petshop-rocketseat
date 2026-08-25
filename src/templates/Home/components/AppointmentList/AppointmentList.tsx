@@ -62,7 +62,7 @@ const appointments: Appointment[] = [
   },
 ];
 
-export const AppointmentList = (appointments: Appointment[]) => {
+export const AppointmentList = () => {
   const { date } = useDateFilterContext();
   const appointmentsGroups = appointmentGroups(appointments || [], date);
 
