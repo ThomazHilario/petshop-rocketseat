@@ -3,6 +3,8 @@
 import { useForm } from 'react-hook-form';
 import { getHours, getMinutes } from 'date-fns';
 
+import { PenLineIcon } from 'lucide-react';
+
 import {
   Form,
   FormDatePicker,
@@ -55,7 +57,9 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button>Editar</Button>
+        <Button className="p-0 border-0" title="Editar agendamento">
+          <PenLineIcon className="text-content-tertiary/80" size={16} />
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="min-h-fit space-y-7">

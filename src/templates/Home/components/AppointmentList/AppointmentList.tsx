@@ -74,6 +74,8 @@ export const AppointmentList = () => {
         <AppointmentCard
           key={`${appointmentsGroup.title}-${index}`}
           title={appointmentsGroup.title}
+          subTitle={appointmentsGroup.subTitle}
+          Icon={appointmentsGroup.icon}
           appointments={appointmentsGroup.appointments}
         />
       ))}
