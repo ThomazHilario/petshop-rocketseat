@@ -43,7 +43,7 @@ export const FormTimePicker = <T extends FieldValues>({
         control={control}
         name={name}
         render={({ field: { onChange, onBlur, value } }) => (
-          <div className="relative flex h-full w-full gap-2 items-center border-2 border-border-primary rounded-lg">
+          <div className="relative flex w-full gap-2 items-center border-2 border-border-primary rounded-lg h-13">
             <ClockIcon className="text-content-brand absolute left-2.5 top-1/2 -translate-y-1/2" />
 
             <select

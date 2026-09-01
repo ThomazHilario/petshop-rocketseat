@@ -4,3 +4,6 @@ export * from './PawIcon';
 export * from './PhoneIcon';
 export * from './CalendarIcon';
 export * from './ClockIcon';
+export * from './SunIcon';
+export * from './AfternoonIcon';
+export * from './MoonIcon';

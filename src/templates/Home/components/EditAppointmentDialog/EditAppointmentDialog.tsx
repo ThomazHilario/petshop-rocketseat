@@ -1,6 +1,9 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
+import { getHours, getMinutes } from 'date-fns';
+
+import { PenLineIcon } from 'lucide-react';
 
 import {
   Form,
@@ -29,60 +32,55 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
 import { APPOINTMENTS_OPTIONS } from '@/config';
-import { getLocalStorage, setLocalStorage } from '@/utils';
-import { dateFormat } from '../../utils';
 import { Appointment } from '@/api';
 
-const APPOINTMENT_DEFAULT_VALUES = {
-  tutorName: '',
-  petName: '',
-  phone: '',
-  service: '',
-  date: new Date(),
-  time: '09:00',
+type EditAppointmentDialogProps = {
+  data: Appointment;
 };
 
-export const DialogAddAppointment = () => {
+const formatData = (data: Appointment): AppointmentSchemaType => ({
+  ...data,
+  date: new Date(data.date),
+  time: `${getHours(data.date)}:${getMinutes(data.date)}`,
+});
+
+export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
   const form = useForm<AppointmentSchemaType>({
     resolver: zodResolver(AppointmentSchema),
-    defaultValues: APPOINTMENT_DEFAULT_VALUES,
+    defaultValues: formatData(data),
   });
 
-  const onAddAppointment = (data: AppointmentSchemaType) => {
-    const appointments: Appointment[] = getLocalStorage('appointments') || [];
-
-    setLocalStorage('appointments', [
-      ...appointments,
-      {
-        tutorName: data.tutorName,
-        petName: data.petName,
-        phone: data.phone,
-        service: data.service,
-        date: dateFormat(data.date, data.time),
-      },
-    ]);
+  const onEditAppointment = (data: AppointmentSchemaType) => {
+    console.log(`${getHours(data.date)}:${getMinutes(data.date)}`);
   };
 
   return (
     <Dialog>
-      <DialogTrigger className="absolute bottom-10 right-10 bg-content-brand py-3 px-6 text-black! rounded-lg drop-shadow-md drop-shadow-content-brand/60">
-        Novo Agendamento
+      <DialogTrigger asChild>
+        <Button className="p-0 border-0" title="Editar agendamento">
+          <PenLineIcon className="text-content-tertiary/80" size={16} />
+        </Button>
       </DialogTrigger>
 
       <DialogContent className="min-h-fit space-y-7">
         <section className="space-y-2">
           <DialogTitle className="text-xl sm:text-[1.5rem]">
-            Agende um atendimento
+            Editar informações do agendamento
           </DialogTitle>
 
           <DialogDescription>
-            Preencha os dados do cliente para realizar o agendamento:
+            Atualize as informações do cliente para concluir a edição do
+            agendamento
           </DialogDescription>
         </section>
 
         <ScrollArea>
           <ScrollAreaViewport className="max-h-110 md:min-h-153 p-2">
-            <Form className="space-y-4" form={form} onSubmit={onAddAppointment}>
+            <Form
+              className="space-y-4"
+              form={form}
+              onSubmit={onEditAppointment}
+            >
               <FormField
                 label="Nome do tutor"
                 placeholder="Helena Souza"
