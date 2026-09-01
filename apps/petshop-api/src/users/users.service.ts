@@ -2,16 +2,15 @@ import { Injectable } from "@nestjs/common";
 
 import type { PrismaService } from "../prisma";
 
+import type { CreateUserDTO } from "./dtos";
+
 @Injectable()
 export class UsersService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findAll() {
-    return this.prisma.user.findMany({
-      take: 10,
-      orderBy: {
-        createdAt: "desc",
-      },
+  async createUser(data: CreateUserDTO) {
+    return await this.prisma.user.create({
+      data
     });
   }
 }

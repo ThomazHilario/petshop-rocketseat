@@ -1,9 +1,13 @@
-import { Controller, Post } from "@nestjs/common";
+import { Module } from "@nestjs/common";
+import { AuthController } from "./auth.controller";
 
-@Controller()
-export class AuthController {
-    @Post('login')
-    login() {
-        
-    }
-}
+import { UsersService } from "../users";
+
+@Module({
+  imports: [],
+  controllers: [
+    AuthController,
+  ],
+  providers: [UsersService],
+})
+export class AuthModule {}
