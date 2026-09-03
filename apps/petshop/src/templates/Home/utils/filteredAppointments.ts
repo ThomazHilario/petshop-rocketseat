@@ -10,7 +10,7 @@ export const FilteredAppointments = (
   const afternoon: Appointment[] = [];
   const evening: Appointment[] = [];
 
-  if (appointments) {
+  if (appointments.length > 0) {
     appointments.forEach((appointment) => {
       const appointmentDate = format(appointment.date, 'dd/MM/yyyy');
 

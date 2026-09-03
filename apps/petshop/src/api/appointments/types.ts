@@ -5,3 +5,8 @@ export type Appointment = {
   service: string;
   date: string;
 };
+
+export type AppointmentResponse = {
+  appointments: Appointment[];
+  total: number;
+};

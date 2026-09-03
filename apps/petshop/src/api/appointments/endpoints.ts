@@ -1,8 +1,8 @@
 import { axios } from '@/config';
-import { Appointment } from './types';
+import { Appointment, AppointmentResponse } from './types';
 
-export const getAllAppointments = async () => {
-  const response = await axios.get('/appointments');
+export const getAllAppointments = async (): Promise<AppointmentResponse> => {
+  const response = await axios.get<AppointmentResponse>('/appointments');
 
   return response.data;
 };

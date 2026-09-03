@@ -10,6 +10,7 @@ export const Agenda = () => {
 
   useEffect(() => {
     setDate(new Date());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

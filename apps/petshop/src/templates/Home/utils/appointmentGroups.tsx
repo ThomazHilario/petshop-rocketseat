@@ -4,16 +4,17 @@ import { Appointment } from '@/api';
 import { FilteredAppointments } from './filteredAppointments';
 
 export const appointmentGroups = (appointments: Appointment[], date: Date) => {
-  const appointmentsFiltered = FilteredAppointments(appointments, date);
-
-  if (!appointmentsFiltered) return;
+  const { morning, afternoon, evening } = FilteredAppointments(
+    appointments,
+    date,
+  );
 
   return [
     {
       title: 'Manhã',
       subTitle: '09h-12h',
       icon: <SunIcon className="relative -top-0.5 text-accent-blue" />,
-      appointments: appointmentsFiltered.morning,
+      appointments: morning,
     },
     {
       title: 'Tarde',
@@ -21,13 +22,13 @@ export const appointmentGroups = (appointments: Appointment[], date: Date) => {
       icon: (
         <AfternoonIcon className="relative -top-0.5 text-accent-orange-light" />
       ),
-      appointments: appointmentsFiltered.afternoon,
+      appointments: afternoon,
     },
     {
       title: 'Noite',
       subTitle: '19h-21h',
       icon: <MoonIcon className="relative -top-0.5 text-accent-yellow" />,
-      appointments: appointmentsFiltered.evening,
+      appointments: evening,
     },
   ];
 };

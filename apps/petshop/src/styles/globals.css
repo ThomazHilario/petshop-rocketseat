@@ -16,6 +16,9 @@
   --color-background-brand: #9282fa;
   --color-background-highlight: #bdb4fa;
 
+  /* Background skeleton */
+  --color-muted: lab(15.204% 0 -.00000596046);
+
   /* Border colors */
   --color-border-primary: #3e3c41;
   --color-border-secondary: #86818c;

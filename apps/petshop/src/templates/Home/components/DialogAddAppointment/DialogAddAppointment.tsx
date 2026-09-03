@@ -29,9 +29,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
 import { APPOINTMENTS_OPTIONS } from '@/config';
-import { getLocalStorage, setLocalStorage } from '@/utils';
 import { dateFormat } from '../../utils';
-import { Appointment } from '@/api';
+import { useCreateAppointment } from '@/api';
+import { useDisclosure } from '@/utils';
 
 const APPOINTMENT_DEFAULT_VALUES = {
   tutorName: '',
@@ -48,11 +48,12 @@ export const DialogAddAppointment = () => {
     defaultValues: APPOINTMENT_DEFAULT_VALUES,
   });
 
-  const onAddAppointment = (data: AppointmentSchemaType) => {
-    const appointments: Appointment[] = getLocalStorage('appointments') || [];
+  const { open, setOpen, handleClose } = useDisclosure();
 
-    setLocalStorage('appointments', [
-      ...appointments,
+  const { mutate: createAppointment } = useCreateAppointment();
+
+  const onAddAppointment = (data: AppointmentSchemaType) => {
+    createAppointment(
       {
         tutorName: data.tutorName,
         petName: data.petName,
@@ -60,11 +61,17 @@ export const DialogAddAppointment = () => {
         service: data.service,
         date: dateFormat(data.date, data.time),
       },
-    ]);
+      {
+        onSettled: () => {
+          form.reset(APPOINTMENT_DEFAULT_VALUES);
+          handleClose();
+        },
+      },
+    );
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger className="absolute bottom-10 right-10 bg-content-brand py-3 px-6 text-black! rounded-lg drop-shadow-md drop-shadow-content-brand/60">
         Novo Agendamento
       </DialogTrigger>
