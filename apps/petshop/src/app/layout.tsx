@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
 import '../styles';
+import { QueryClientProvider } from '@/providers';
 
 export const metadata: Metadata = {
   title: 'petshop',
@@ -14,7 +15,9 @@ type RootLayoutProps = Readonly<{
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="pt-br">
-      <body className="min-h-screen flex flex-col text-white">{children}</body>
+      <body className="min-h-screen flex flex-col text-white">
+        <QueryClientProvider>{children}</QueryClientProvider>
+      </body>
     </html>
   );
 }

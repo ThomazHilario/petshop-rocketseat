@@ -3,10 +3,14 @@
 import { Text, Title } from '@/components/commons';
 import { Datepicker } from '@/components/ui';
 import { useDateFilterContext } from '../../Context';
-import { FilteredAppointments } from '../../utils';
+import { useEffect } from 'react';
 
 export const Agenda = () => {
   const { date, setDate } = useDateFilterContext();
+
+  useEffect(() => {
+    setDate(new Date());
+  }, []);
 
   return (
     <div className="space-y-3 md:space-y-1 md:flex md:justify-between md:items-center">

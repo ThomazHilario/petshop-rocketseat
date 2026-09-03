@@ -1,6 +1,9 @@
-const START_HOUR = 9;
-const END_HOUR = 21 * 6;
-const INTERVAL = 30;
+import { create } from 'axios';
+import { env } from '@/utils';
+
+export const axios = create({
+  baseURL: env.PETSHOP_API_BASE_URL,
+});
 
 function generateOptions(initial = '09:00', fim = '21:00', interval = 30) {
   const hours = [];

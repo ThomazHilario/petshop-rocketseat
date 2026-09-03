@@ -6,6 +6,8 @@ import { FilteredAppointments } from './filteredAppointments';
 export const appointmentGroups = (appointments: Appointment[], date: Date) => {
   const appointmentsFiltered = FilteredAppointments(appointments, date);
 
+  if (!appointmentsFiltered) return;
+
   return [
     {
       title: 'Manhã',

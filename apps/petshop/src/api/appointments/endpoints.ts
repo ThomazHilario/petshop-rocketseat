@@ -1,7 +1,14 @@
+import { axios } from '@/config';
 import { Appointment } from './types';
 
-const LOCALSTORAGE_KEY = 'appointments';
+export const getAllAppointments = async () => {
+  const response = await axios.get('/appointments');
 
-export const getAllAppointments = () => {};
+  return response.data;
+};
 
-export const postAppointment = (appointment: Appointment) => {};
+export const postAppointment = async (appointment: Appointment) => {
+  const response = await axios.post('/appointments', appointment);
+
+  return response.data;
+};
