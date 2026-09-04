@@ -16,17 +16,19 @@ type DatePickerProps = Omit<
 > & {
   selected?: Date;
   onSelected?: () => any;
+  isLoading?: boolean;
 };
 
 export const Datepicker = ({
   selected,
   onSelected,
+  isLoading = false,
   ...props
 }: DatePickerProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
-        {!selected ? (
+        {isLoading ? (
           <Skeleton className="h-13 w-34" />
         ) : (
           <Button className="justify-start gap-2.5 py-0 h-13">

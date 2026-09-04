@@ -22,6 +22,26 @@ let AppointmentsService = class AppointmentsService {
             total: appointments.length
         };
     }
+    async updateAppointment(data) {
+        try {
+            await prisma_1.prisma.appointment.update({
+                data,
+                where: {
+                    id: data.id
+                }
+            });
+            return {
+                message: "Updated appointment successfully",
+                status: common_1.HttpStatus.OK
+            };
+        }
+        catch (error) {
+            return {
+                message: "Appointment not found",
+                status: common_1.HttpStatus.NOT_FOUND
+            };
+        }
+    }
     async deleteAppointment(id) {
         try {
             await prisma_1.prisma.appointment.delete({

@@ -1,4 +1,5 @@
 export type Appointment = {
+  id: string;
   tutorName: string;
   petName: string;
   phone: string;
@@ -6,7 +7,15 @@ export type Appointment = {
   date: string;
 };
 
-export type AppointmentResponse = {
+export type CreateAppointmentType = Omit<Appointment, 'id'>;
+
+export type UpdateAppointmentType = Appointment & {
+  id: string;
+};
+
+export type AppointmentResponseType = {
   appointments: Appointment[];
   total: number;
 };
+
+export type DeleteAppointmentResponseType = void;

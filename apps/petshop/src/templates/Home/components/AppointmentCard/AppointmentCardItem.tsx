@@ -1,11 +1,13 @@
 'use client';
 
-import { Appointment } from '@/api';
-import { Text } from '@/components/commons';
-import { EditAppointmentDialog } from '../EditAppointmentDialog';
 import { getHours, getMinutes } from 'date-fns';
-import { X } from 'lucide-react';
-import { Button } from '@/components/ui';
+
+import { Text } from '@/components/commons';
+
+import { Appointment, useDeleteAppointment } from '@/api';
+
+import { EditAppointmentDialog } from '../EditAppointmentDialog';
+import { DeleteAppointmentDialog } from '../DeleteAppointmentDialog';
 
 type AppointmentCardItemProps = {
   appointment: Appointment;
@@ -15,6 +17,10 @@ export const AppointmentCardItem = ({
   appointment,
 }: AppointmentCardItemProps) => {
   const hourFormated = `${getHours(appointment.date).toString().padStart(2, '0')}:${getMinutes(appointment.date).toString().padStart(2, '0')}`;
+
+  const { mutate: deleteAppointment } = useDeleteAppointment();
+
+  const handleDeleteAppointment = () => deleteAppointment(appointment.id);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3">
@@ -55,9 +61,9 @@ export const AppointmentCardItem = ({
         className="flex gap-3 sm:justify-end sm:order-2"
       >
         <EditAppointmentDialog data={appointment} />
-        <Button className="p-0 border-0">
-          <X className="text-red-400" size={16} />
-        </Button>
+        <DeleteAppointmentDialog
+          handleDeleteAppointment={handleDeleteAppointment}
+        />
       </section>
     </div>
   );

@@ -32,13 +32,14 @@ import { APPOINTMENTS_OPTIONS } from '@/config';
 import { dateFormat } from '../../utils';
 import { useCreateAppointment } from '@/api';
 import { useDisclosure } from '@/utils';
+import { useEffect } from 'react';
 
 const APPOINTMENT_DEFAULT_VALUES = {
   tutorName: '',
   petName: '',
   phone: '',
   service: '',
-  date: new Date(),
+  date: undefined,
   time: '09:00',
 };
 
@@ -69,6 +70,10 @@ export const DialogAddAppointment = () => {
       },
     );
   };
+
+  useEffect(() => {
+    if (!open) form.reset(APPOINTMENT_DEFAULT_VALUES);
+  }, [open, form]);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>

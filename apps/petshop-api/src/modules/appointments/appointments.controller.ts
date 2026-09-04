@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 
 import { AppointmentsService } from "./appointments.service";
 
-import { CreateAppointmentDto } from "./dtos";
+import { CreateAppointmentDto, UpdateAppointmentDto } from "./dtos";
 
 @Controller('appointments')
 export class AppointmentsController {
@@ -16,6 +16,11 @@ export class AppointmentsController {
     @Get()
     async findAllAppointments() {
         return this.appointmentsService.findAllAppointment();
+    }
+
+    @Patch()
+    async updateAppointment(@Body() data:UpdateAppointmentDto){
+        return this.appointmentsService.updateAppointment(data)
     }
 
     @Delete(':id')

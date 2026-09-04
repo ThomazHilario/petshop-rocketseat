@@ -1,6 +1,6 @@
 import { HttpStatus, Injectable } from "@nestjs/common";
 
-import { CreateAppointmentDto } from "./dtos";
+import { CreateAppointmentDto, UpdateAppointmentDto } from "./dtos";
 
 import { prisma } from "../../prisma";
 
@@ -18,6 +18,27 @@ export class AppointmentsService {
         return {
             appointments,
             total: appointments.length
+        }
+    }
+
+    async updateAppointment(data: UpdateAppointmentDto){
+        try {
+            await prisma.appointment.update({
+                data,
+                where: {
+                    id: data.id
+                }
+            })
+
+            return {
+                message: "Updated appointment successfully",
+                status: HttpStatus.OK
+            }
+        } catch(error){
+            return {
+                message: "Appointment not found",
+                status: HttpStatus.NOT_FOUND
+            }
         }
     }
 

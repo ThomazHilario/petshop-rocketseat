@@ -1,5 +1,5 @@
 import { AppointmentsService } from "./appointments.service";
-import { CreateAppointmentDto } from "./dtos";
+import { CreateAppointmentDto, UpdateAppointmentDto } from "./dtos";
 export declare class AppointmentsController {
     private readonly appointmentsService;
     constructor(appointmentsService: AppointmentsService);
@@ -21,6 +21,10 @@ export declare class AppointmentsController {
             id: string;
         }[];
         total: number;
+    }>;
+    updateAppointment(data: UpdateAppointmentDto): Promise<{
+        message: string;
+        status: import("@nestjs/common", { with: { "resolution-mode": "import" } }).HttpStatus;
     }>;
     deleteAppointment(id: string): Promise<{
         message: string;

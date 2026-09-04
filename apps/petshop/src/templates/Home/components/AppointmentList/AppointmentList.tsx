@@ -10,7 +10,9 @@ import { For } from '@/components/utils';
 export const AppointmentList = () => {
   const { date } = useDateFilterContext();
 
-  const { data, isLoading } = useGetAppointments();
+  const { data, isLoading, isFetching } = useGetAppointments();
+
+  const isLoadingAppointments = isLoading || isFetching;
 
   const appointments = data?.appointments || [];
 
@@ -20,7 +22,7 @@ export const AppointmentList = () => {
     <For values={appointmentsGroups}>
       {(appointmentsGroup, index) => (
         <AppointmentCard
-          isLoading={isLoading}
+          isLoading={isLoadingAppointments}
           key={`${appointmentsGroup.title}-${index}`}
           title={appointmentsGroup.title}
           subTitle={appointmentsGroup.subTitle}

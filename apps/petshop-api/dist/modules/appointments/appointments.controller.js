@@ -27,6 +27,9 @@ let AppointmentsController = class AppointmentsController {
     async findAllAppointments() {
         return this.appointmentsService.findAllAppointment();
     }
+    async updateAppointment(data) {
+        return this.appointmentsService.updateAppointment(data);
+    }
     async deleteAppointment(id) {
         return this.appointmentsService.deleteAppointment(id);
     }
@@ -45,6 +48,13 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
 ], AppointmentsController.prototype, "findAllAppointments", null);
+__decorate([
+    (0, common_1.Patch)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [dtos_1.UpdateAppointmentDto]),
+    __metadata("design:returntype", Promise)
+], AppointmentsController.prototype, "updateAppointment", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),

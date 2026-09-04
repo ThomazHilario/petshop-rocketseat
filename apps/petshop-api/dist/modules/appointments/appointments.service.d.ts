@@ -1,5 +1,5 @@
 import { HttpStatus } from "@nestjs/common";
-import { CreateAppointmentDto } from "./dtos";
+import { CreateAppointmentDto, UpdateAppointmentDto } from "./dtos";
 export declare class AppointmentsService {
     createAppointment(data: CreateAppointmentDto): Promise<{
         petName: string;
@@ -19,6 +19,10 @@ export declare class AppointmentsService {
             id: string;
         }[];
         total: number;
+    }>;
+    updateAppointment(data: UpdateAppointmentDto): Promise<{
+        message: string;
+        status: HttpStatus;
     }>;
     deleteAppointment(id: string): Promise<{
         message: string;

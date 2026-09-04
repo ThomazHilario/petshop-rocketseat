@@ -1,7 +1,7 @@
 'use client';
 
 import { useForm } from 'react-hook-form';
-import { getHours, getMinutes } from 'date-fns';
+import { add, getHours, getMinutes, parseISO, setDate, setDay } from 'date-fns';
 
 import { PenLineIcon } from 'lucide-react';
 
@@ -32,30 +32,54 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
 import { APPOINTMENTS_OPTIONS } from '@/config';
-import { Appointment } from '@/api';
+import { UpdateAppointmentType, useUpdateAppointment } from '@/api';
+import { dateFormat, timeFormat } from '../../utils';
+import { useDisclosure } from '@/utils';
+import { useEffect } from 'react';
 
 type EditAppointmentDialogProps = {
-  data: Appointment;
+  data: UpdateAppointmentType;
 };
 
-const formatData = (data: Appointment): AppointmentSchemaType => ({
+const formatData = (data: UpdateAppointmentType): AppointmentSchemaType => ({
   ...data,
-  date: new Date(data.date),
-  time: `${getHours(data.date)}:${getMinutes(data.date)}`,
+  date: parseISO(data.date),
+  time: timeFormat(data.date),
 });
 
 export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
   const form = useForm<AppointmentSchemaType>({
     resolver: zodResolver(AppointmentSchema),
-    defaultValues: formatData(data),
   });
 
+  const { open, setOpen, handleClose } = useDisclosure();
+
+  const { mutate: updateAppointment } = useUpdateAppointment();
+
   const onEditAppointment = (data: AppointmentSchemaType) => {
-    console.log(`${getHours(data.date)}:${getMinutes(data.date)}`);
+    updateAppointment(
+      {
+        id: data.id as string,
+        tutorName: data.tutorName,
+        petName: data.petName,
+        phone: data.phone,
+        service: data.service,
+        date: dateFormat(data.date, data.time),
+      },
+      {
+        onSuccess: () => handleClose(),
+      },
+    );
   };
 
+  useEffect(() => {
+    if (open) {
+      form.reset(formatData(data));
+    }
+  }, [open, form, data]);
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="p-0 border-0" title="Editar agendamento">
           <PenLineIcon className="text-content-tertiary/80" size={16} />
