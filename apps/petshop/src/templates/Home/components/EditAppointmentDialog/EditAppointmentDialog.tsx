@@ -1,9 +1,11 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
-import { add, getHours, getMinutes, parseISO, setDate, setDay } from 'date-fns';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { parseISO } from 'date-fns';
 
-import { PenLineIcon } from 'lucide-react';
+import { LoaderIcon, PenLineIcon } from 'lucide-react';
 
 import {
   Form,
@@ -27,7 +29,6 @@ import {
   ScrollAreaScrollbar,
   ScrollAreaViewport,
 } from '@/components/ui';
-import { zodResolver } from '@hookform/resolvers/zod';
 
 import { AppointmentSchema, AppointmentSchemaType } from '../../schemas';
 
@@ -35,7 +36,6 @@ import { APPOINTMENTS_OPTIONS } from '@/config';
 import { UpdateAppointmentType, useUpdateAppointment } from '@/api';
 import { dateFormat, timeFormat } from '../../utils';
 import { useDisclosure } from '@/utils';
-import { useEffect } from 'react';
 
 type EditAppointmentDialogProps = {
   data: UpdateAppointmentType;
@@ -54,7 +54,7 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
 
   const { open, setOpen, handleClose } = useDisclosure();
 
-  const { mutate: updateAppointment } = useUpdateAppointment();
+  const { mutate: updateAppointment, isPending } = useUpdateAppointment();
 
   const onEditAppointment = (data: AppointmentSchemaType) => {
     updateAppointment(
@@ -121,7 +121,9 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
 
               <FormField
                 label="Telefone"
-                placeholder="(00) 0 0000-0000"
+                placeholder="(00) 00000-0000"
+                isMask
+                mask="(00) 00000-0000"
                 name="phone"
                 Icon={<PhoneIcon className="text-content-brand" />}
               />
@@ -144,7 +146,11 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
               </div>
 
               <Button className="block ml-auto" variant="brand" type="submit">
-                Editar agendamento
+                {isPending ? (
+                  <LoaderIcon className="animate-spin" size={16} />
+                ) : (
+                  'Editar agendamento'
+                )}
               </Button>
             </Form>
           </ScrollAreaViewport>

@@ -1,6 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
+import { IMaskInput } from 'react-imask';
 
 import {
   Controller,
@@ -8,7 +9,9 @@ import {
   type FieldPath,
   type FieldValues,
 } from 'react-hook-form';
+
 import { FormFieldError } from './FormFieldError';
+
 import { cn } from '@/utils';
 
 type FormFieldProps<T extends FieldValues> = {
@@ -16,6 +19,8 @@ type FormFieldProps<T extends FieldValues> = {
   name: FieldPath<T>;
   placeholder: string;
   Icon?: ReactNode;
+  isMask?: boolean;
+  mask?: string;
 };
 
 export const FormField = <T extends FieldValues>({
@@ -23,6 +28,8 @@ export const FormField = <T extends FieldValues>({
   name,
   placeholder,
   Icon,
+  isMask,
+  mask,
 }: FormFieldProps<T>) => {
   const {
     control,
@@ -49,14 +56,28 @@ export const FormField = <T extends FieldValues>({
           control={control}
           name={name}
           render={({ field: { onChange, onBlur, value } }) => (
-            <input
-              id={name}
-              className="flex-1 border-0 outline-0"
-              placeholder={placeholder}
-              onChange={onChange}
-              onBlur={onBlur}
-              value={value}
-            />
+            <>
+              {isMask ? (
+                <IMaskInput
+                  id={name}
+                  mask={mask}
+                  className="flex-1 border-0 outline-0"
+                  placeholder={placeholder}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                />
+              ) : (
+                <input
+                  id={name}
+                  className="flex-1 border-0 outline-0"
+                  placeholder={placeholder}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  value={value}
+                />
+              )}
+            </>
           )}
         />
       </div>

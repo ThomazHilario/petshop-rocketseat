@@ -1,6 +1,8 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
+import { LoaderIcon } from 'lucide-react';
 
 import {
   Form,
@@ -32,7 +34,6 @@ import { APPOINTMENTS_OPTIONS } from '@/config';
 import { dateFormat } from '../../utils';
 import { useCreateAppointment } from '@/api';
 import { useDisclosure } from '@/utils';
-import { useEffect } from 'react';
 
 const APPOINTMENT_DEFAULT_VALUES = {
   tutorName: '',
@@ -51,7 +52,7 @@ export const DialogAddAppointment = () => {
 
   const { open, setOpen, handleClose } = useDisclosure();
 
-  const { mutate: createAppointment } = useCreateAppointment();
+  const { mutate: createAppointment, isPending } = useCreateAppointment();
 
   const onAddAppointment = (data: AppointmentSchemaType) => {
     createAppointment(
@@ -112,6 +113,8 @@ export const DialogAddAppointment = () => {
               <FormField
                 label="Telefone"
                 placeholder="(00) 0 0000-0000"
+                isMask
+                mask="(00) 00000-0000"
                 name="phone"
                 Icon={<PhoneIcon className="text-content-brand" />}
               />
@@ -134,7 +137,11 @@ export const DialogAddAppointment = () => {
               </div>
 
               <Button className="block ml-auto" variant="brand" type="submit">
-                Agendar
+                {isPending ? (
+                  <LoaderIcon className="animate-spin" size={16} />
+                ) : (
+                  'Agendar'
+                )}
               </Button>
             </Form>
           </ScrollAreaViewport>
