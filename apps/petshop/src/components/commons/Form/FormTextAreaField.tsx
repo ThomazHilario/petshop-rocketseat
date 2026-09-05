@@ -8,6 +8,8 @@ import {
   type FieldPath,
   type FieldValues,
 } from 'react-hook-form';
+import { FormFieldError } from './FormFieldError';
+import { cn } from '@/utils';
 
 type FormTextAreaFieldProps<T extends FieldValues> = {
   label: string;
@@ -22,7 +24,10 @@ export const FormTextAreaField = <T extends FieldValues>({
   placeholder,
   Icon,
 }: FormTextAreaFieldProps<T>) => {
-  const { control } = useFormContext();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext();
 
   return (
     <div className="flex flex-col gap-2">
@@ -30,7 +35,14 @@ export const FormTextAreaField = <T extends FieldValues>({
         {label}
       </label>
 
-      <div className="flex gap-2 items-center border-2 border-border-primary has-[textarea:focus-within]:outline-2 has-[textarea:focus-within]:-outline-offset-2 has-[textarea:focus-within]:outline-content-brand rounded-lg p-3">
+      <div
+        className={cn(
+          'flex gap-2 items-center border-2 border-border-primary rounded-lg p-3',
+          errors[name]
+            ? 'outline-2 -outline-offset-2 outline-red-400'
+            : 'has-[textarea:focus-within]:outline-2 has-[textarea:focus-within]:-outline-offset-2 has-[textarea:focus-within]:outline-content-brand',
+        )}
+      >
         {Icon && Icon}
 
         <Controller
@@ -49,6 +61,8 @@ export const FormTextAreaField = <T extends FieldValues>({
           )}
         />
       </div>
+
+      <FormFieldError control={control} name={name} />
     </div>
   );
 };

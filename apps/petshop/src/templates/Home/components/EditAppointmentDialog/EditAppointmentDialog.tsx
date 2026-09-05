@@ -144,7 +144,7 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
               </div>
 
               <Button className="block ml-auto" variant="brand" type="submit">
-                Agendar
+                Editar agendamento
               </Button>
             </Form>
           </ScrollAreaViewport>

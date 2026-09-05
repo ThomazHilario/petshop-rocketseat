@@ -10,6 +10,7 @@ import {
 import { Datepicker } from '@/components/ui';
 
 import { cn } from '@/utils';
+import { FormFieldError } from './FormFieldError';
 
 type FormDatePickerProps<T extends FieldValues> = {
   label: string;
@@ -44,6 +45,8 @@ export const FormDatePicker = <T extends FieldValues>({
           />
         )}
       />
+
+      <FormFieldError control={control} name={name} />
     </div>
   );
 };

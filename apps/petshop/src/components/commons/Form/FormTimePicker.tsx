@@ -10,6 +10,7 @@ import {
 
 import { cn } from '@/utils';
 import { ClockIcon } from '../Icons';
+import { FormFieldError } from './FormFieldError';
 
 type ValuesProps = {
   label: string;
@@ -62,6 +63,8 @@ export const FormTimePicker = <T extends FieldValues>({
           </div>
         )}
       />
+
+      <FormFieldError control={control} name={name} />
     </div>
   );
 };
