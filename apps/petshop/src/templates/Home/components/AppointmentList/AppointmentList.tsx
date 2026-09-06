@@ -6,6 +6,7 @@ import { useDateFilterContext } from '../../Context';
 import { appointmentGroups } from '../../utils';
 
 import { For } from '@/components/utils';
+import { useMemo } from 'react';
 
 export const AppointmentList = () => {
   const { date } = useDateFilterContext();
@@ -14,9 +15,19 @@ export const AppointmentList = () => {
 
   const isLoadingAppointments = isLoading || isFetching;
 
-  const appointments = data?.appointments || [];
+  const appointments = useMemo(
+    () => data?.appointments || [],
+    [data?.appointments],
+  );
 
-  const appointmentsGroups = appointmentGroups(appointments, date!);
+  const sortedAppointments = appointments.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+
+    return dateA - dateB;
+  });
+
+  const appointmentsGroups = appointmentGroups(sortedAppointments, date!);
 
   return (
     <For values={appointmentsGroups}>

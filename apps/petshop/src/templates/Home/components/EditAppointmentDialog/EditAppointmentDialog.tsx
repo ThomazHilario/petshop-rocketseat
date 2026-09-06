@@ -82,7 +82,7 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="p-0 border-0" title="Editar agendamento">
-          <PenLineIcon className="text-content-tertiary/80" size={16} />
+          <PenLineIcon className="text-accent-blue p-1 h-7 w-7 rounded-sm border-2 border-accent-blue" />
         </Button>
       </DialogTrigger>
 
@@ -145,7 +145,12 @@ export const EditAppointmentDialog = ({ data }: EditAppointmentDialogProps) => {
                 />
               </div>
 
-              <Button className="block ml-auto" variant="brand" type="submit">
+              <Button
+                className="block ml-auto"
+                variant="brand"
+                disabled={isPending}
+                type="submit"
+              >
                 {isPending ? (
                   <LoaderIcon className="animate-spin" size={16} />
                 ) : (

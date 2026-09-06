@@ -14,6 +14,10 @@ const buttonVariants = tv({
       sm: 'p-3',
       md: 'py-3 px-6',
     },
+    disabled: {
+      true: 'pointer-events-none opacity-50',
+      false: 'pointer-events-auto',
+    },
   },
   defaultVariants: {
     variant: 'primary',
@@ -21,12 +25,18 @@ const buttonVariants = tv({
   },
 });
 
-type ButtonProps = ComponentProps<'button'> &
+type ButtonProps = Omit<ComponentProps<'button'>, 'disabled'> &
   VariantProps<typeof buttonVariants>;
 
-export const Button = ({ className, variant, size, ...props }: ButtonProps) => (
+export const Button = ({
+  className,
+  variant,
+  size,
+  disabled,
+  ...props
+}: ButtonProps) => (
   <button
-    className={cn(buttonVariants({ className, variant, size }))}
+    className={cn(buttonVariants({ className, variant, size, disabled }))}
     {...props}
   />
 );

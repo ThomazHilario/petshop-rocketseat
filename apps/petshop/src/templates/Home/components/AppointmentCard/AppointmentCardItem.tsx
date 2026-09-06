@@ -18,9 +18,13 @@ export const AppointmentCardItem = ({
 }: AppointmentCardItemProps) => {
   const hourFormated = `${getHours(appointment.date).toString().padStart(2, '0')}:${getMinutes(appointment.date).toString().padStart(2, '0')}`;
 
-  const { mutate: deleteAppointment } = useDeleteAppointment();
+  const { mutate: deleteAppointment, isPending } = useDeleteAppointment();
 
-  const handleDeleteAppointment = () => deleteAppointment(appointment.id);
+  const handleDeleteAppointment = (callback: () => void) => {
+    deleteAppointment(appointment.id, {
+      onSettled: () => callback(),
+    });
+  };
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 p-3">
@@ -63,6 +67,7 @@ export const AppointmentCardItem = ({
         <EditAppointmentDialog data={appointment} />
         <DeleteAppointmentDialog
           handleDeleteAppointment={handleDeleteAppointment}
+          isPending={isPending}
         />
       </section>
     </div>

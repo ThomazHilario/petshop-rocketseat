@@ -136,7 +136,12 @@ export const DialogAddAppointment = () => {
                 />
               </div>
 
-              <Button className="block ml-auto" variant="brand" type="submit">
+              <Button
+                className="block ml-auto"
+                variant="brand"
+                disabled={isPending}
+                type="submit"
+              >
                 {isPending ? (
                   <LoaderIcon className="animate-spin" size={16} />
                 ) : (
