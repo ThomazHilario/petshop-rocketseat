@@ -1,4 +1,7 @@
+'use server';
+
 import { axios } from '@/config';
+
 import {
   CreateAppointmentType,
   AppointmentResponseType,
