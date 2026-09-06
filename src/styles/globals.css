@@ -1,8 +1,0 @@
-@import 'tailwindcss';
-
-@theme {
-  --color-content-brand: #9282fa;
-
-  --color-background-primary: #14151d;
-  --color-background-tertiary: #23242c;
-}
