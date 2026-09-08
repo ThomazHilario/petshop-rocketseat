@@ -23,92 +23,153 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+# Petshop API
 
-## Project setup
+Back-end da aplicação Petshop, desenvolvido com NestJS, TypeScript, Prisma e PostgreSQL. A API disponibiliza as operações de agenda consumidas pelo front-end: listar, criar, atualizar e excluir agendamentos.
 
-```bash
-$ npm install
-```
+## Pré-requisitos
 
-## Compile and run the project
+- Node.js compatível com o NestJS 12 e o Prisma 7;
+- npm 11, conforme definido no `packageManager` do monorepo;
+- uma instância PostgreSQL acessível pela aplicação;
+- credenciais de acesso ao banco para preencher `DATABASE_URL`.
 
-```bash
-# development
-$ npm run start
+## Instalação
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
+O back-end está dentro do monorepo npm. Instale as dependências a partir da raiz para configurar todos os workspaces:
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+cd petshop-rocketseat
+npm install
 ```
 
-## Deployment
+O script `postinstall` do pacote gera o cliente Prisma automaticamente. Depois, configure o ambiente da API conforme a seção seguinte.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+## Variáveis de ambiente
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Crie `apps/petshop-api/.env` a partir do exemplo:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+cp apps/petshop-api/.env.example apps/petshop-api/.env
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Preencha o arquivo com uma URL válida do PostgreSQL:
 
-## Observability
+```env
+DATABASE_URL=postgresql://usuario:senha@localhost:5432/petshop
+```
 
-In production applications, observability is essential for understanding how your system behaves, detecting issues early, and maintaining reliable performance.
+### Variáveis disponíveis
 
-[NestJS Observe](https://observe.nestjs.com) automatically instruments your NestJS application, giving you deep visibility into your system with minimal setup:
+| Variável       | Obrigatória | Finalidade                                                       |
+| -------------- | ----------- | ---------------------------------------------------------------- |
+| `DATABASE_URL` | Sim         | String de conexão usada pelo Prisma para acessar o PostgreSQL.   |
+| `PORT`         | Não         | Porta HTTP da API. Quando não informada, a aplicação usa `3000`. |
 
-- **Distributed tracing:** Follow requests across services and understand how they flow through your system.
-- **Waterfall analysis:** Visualize request execution and identify slow operations, bottlenecks, and unexpected delays.
-- **Performance analysis:** Analyze application performance in real time and quickly pinpoint areas that need optimization.
-- **Metrics:** Track key application and infrastructure metrics to understand system health and performance trends.
-- **Logging:** Centralize and correlate logs with traces and other telemetry to make debugging easier.
-- **Error tracking:** Detect errors quickly and investigate their root causes with the surrounding context.
-- **SLA monitoring:** Track service-level objectives and identify when your application is approaching or exceeding defined thresholds.
-- **Alarms and alerts:** Set up alerts for critical errors, performance degradation, SLA violations, and other anomalies so your team can react quickly.
+O `DATABASE_URL` pode conter credenciais. Não o publique, não o versione e não o inclua em logs. O arquivo `.env` está ignorado pelo Git. Em ambientes hospedados, configure a variável diretamente no provedor.
 
-## Resources
+## Banco de dados e Prisma
 
-Check out a few resources that may come in handy when working with NestJS:
+O schema está em `prisma/schema.prisma` e define o modelo `Appointment`, com os campos `id`, `petName`, `tutorName`, `phone`, `service` e `date`.
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Auto-instrument your application with [NestJS Observer](https://observer.nestjs.com). Distributed tracing, metrics, and logging made easy. Error tracking and performance monitoring for your NestJS applications.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Para criar ou aplicar migrações a partir da raiz do monorepo, os scripts da raiz esperam que `DATABASE_URL` também esteja disponível em um `.env` na raiz:
 
-## Support
+```bash
+npm run db:migrate
+```
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Os demais comandos relacionados ao banco são:
 
-## Stay in touch
+```bash
+npm run db:generate
+npm run db:reset
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+`db:generate` gera o cliente Prisma; `db:reset` apaga e recria o banco conforme as migrações, portanto deve ser usado com cuidado. Como o repositório ainda não possui uma pasta `prisma/migrations` versionada, a primeira migração deve ser criada pelo comando `db:migrate` após o banco e o ambiente estarem configurados.
 
-## License
+## Executando a API
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Na raiz do monorepo:
+
+```bash
+npm run dev --workspace=petshop-api
+```
+
+Ou dentro do diretório do back-end:
+
+```bash
+cd apps/petshop-api
+npm run dev
+```
+
+A API será iniciada na porta definida por `PORT` ou, por padrão, em [http://localhost:3000](http://localhost:3000). O modo `dev` observa alterações nos arquivos e reinicia o processo automaticamente.
+
+## Scripts disponíveis
+
+Os scripts abaixo estão definidos em `apps/petshop-api/package.json`:
+
+| Script               | Finalidade                                               |
+| -------------------- | -------------------------------------------------------- |
+| `npm run start`      | Inicia a API sem watch mode.                             |
+| `npm run dev`        | Inicia a API em modo de desenvolvimento, com watch mode. |
+| `npm run build`      | Compila o back-end para produção.                        |
+| `npm run start:prod` | Executa a aplicação compilada em `dist/main`.            |
+| `npm run lint`       | Executa o Oxlint nos diretórios de código e testes.      |
+| `npm run format`     | Formata os arquivos TypeScript com Prettier.             |
+| `npm run test`       | Executa os testes unitários.                             |
+| `npm run test:watch` | Executa os testes em modo de observação.                 |
+| `npm run test:cov`   | Executa os testes e gera cobertura.                      |
+| `npm run test:e2e`   | Executa os testes end-to-end configurados.               |
+
+## API REST
+
+O módulo atual é `appointments`:
+
+| Método   | Endpoint            | Descrição                                           |
+| -------- | ------------------- | --------------------------------------------------- |
+| `GET`    | `/appointments`     | Lista os agendamentos e retorna o total.            |
+| `POST`   | `/appointments`     | Cria um agendamento.                                |
+| `PATCH`  | `/appointments`     | Atualiza um agendamento pelo `id` enviado no corpo. |
+| `DELETE` | `/appointments/:id` | Exclui um agendamento pelo `id`.                    |
+
+Os DTOs validam campos obrigatórios, strings e datas no formato ISO. O bootstrap da aplicação habilita `ValidationPipe` global e CORS.
+
+## Estrutura principal
+
+```text
+src/
+├── main.ts                    # Bootstrap, ValidationPipe, CORS e porta HTTP
+├── app.module.ts              # Módulo raiz e carregamento de configuração
+├── app.controller.ts          # Controlador geral da aplicação
+├── modules/
+│   └── appointments/
+│       ├── appointments.module.ts
+│       ├── appointments.controller.ts
+│       ├── appointments.service.ts
+│       └── dtos/               # DTOs de criação e atualização
+└── prisma/
+  ├── prisma.service.ts       # Cliente Prisma com adaptador PostgreSQL
+  └── index.ts                 # Exportação da instância compartilhada
+
+prisma/
+└── schema.prisma                # Modelo e configuração do banco
+```
+
+O controlador define as rotas HTTP, o serviço executa as operações de negócio e o Prisma realiza a persistência no PostgreSQL.
+
+## Tecnologias principais
+
+- NestJS 12 e Node.js;
+- TypeScript;
+- Express via `@nestjs/platform-express`;
+- Prisma 7 e `@prisma/adapter-pg`;
+- PostgreSQL;
+- `class-validator` e `class-transformer`;
+- Jest e Supertest;
+- Oxlint e Prettier.
+
+## Referências
+
+- [NestJS Documentation](https://docs.nestjs.com)
+- [Prisma Documentation](https://www.prisma.io/docs)
+- [PostgreSQL Documentation](https://www.postgresql.org/docs/)
