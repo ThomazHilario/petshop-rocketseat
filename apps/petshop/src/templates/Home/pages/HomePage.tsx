@@ -6,6 +6,7 @@ import { Agenda, AppointmentList, Header } from '../components';
 import { DialogAddAppointment } from '../components/DialogAddAppointment/DialogAddAppointment';
 
 import { DateFilterProvider } from '@/templates/Home/Context';
+import { Suspense } from 'react';
 
 export const HomePage = () => (
   <DateFilterProvider>
@@ -13,7 +14,9 @@ export const HomePage = () => (
       <Header />
 
       <Main className="max-w-217.75 m-auto space-y-5">
-        <Agenda />
+        <Suspense>
+          <Agenda />
+        </Suspense>
 
         <section className="space-y-4" arial-label="Seção de agendamentos">
           <AppointmentList />
