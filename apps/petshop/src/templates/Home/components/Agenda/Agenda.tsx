@@ -4,12 +4,36 @@ import { Text, Title } from '@/components/commons';
 import { Datepicker } from '@/components/ui';
 import { useDateFilterContext } from '../../Context';
 import { useEffect } from 'react';
+import { format, isValid, parse } from 'date-fns';
+import { useParams } from '@/utils';
+import { ptBR } from 'date-fns/locale';
+
+const DATE_FORMAT = 'dd-MM-yyyy';
 
 export const Agenda = () => {
   const { date, setDate } = useDateFilterContext();
+  const { param, setParam } = useParams('date');
+
+  const handleDate = (newDate: Date) => {
+    setDate(newDate);
+    setParam('date', format(newDate, DATE_FORMAT, { locale: ptBR }));
+  };
 
   useEffect(() => {
-    setDate(new Date());
+    if (!param) {
+      handleDate(new Date());
+      return;
+    }
+
+    const parsedDate = parse(param, DATE_FORMAT, new Date(), { locale: ptBR });
+
+    if (!isValid(parsedDate)) {
+      handleDate(new Date());
+      return;
+    }
+
+    setDate(parsedDate);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -23,7 +47,7 @@ export const Agenda = () => {
         </Text>
       </section>
       <div>
-        <Datepicker selected={date} onDayClick={setDate} />
+        <Datepicker selected={date} onDayClick={handleDate} />
       </div>
     </div>
   );
