@@ -1,6 +1,7 @@
 'use server';
 
 import { axios } from '@/config';
+import { isAxiosError } from 'axios';
 
 import {
   CreateAppointmentType,
@@ -17,15 +18,33 @@ export const getAllAppointments =
   };
 
 export const postAppointment = async (appointment: CreateAppointmentType) => {
-  const response = await axios.post('/appointments', appointment);
+  try {
+    const response = await axios.post('/appointments', appointment);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ??
+          'Não foi possível realizar o agendamento, por favor tente mais tarde!',
+      );
+    }
+  }
 };
 
 export const updateAppointment = async (appointment: UpdateAppointmentType) => {
-  const response = await axios.patch('/appointments', appointment);
+  try {
+    const response = await axios.patch('/appointments', appointment);
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    if (isAxiosError(error)) {
+      throw new Error(
+        error.response?.data?.message ??
+          'Não foi possível realizar o agendamento, por favor tente mais tarde!',
+      );
+    }
+  }
 };
 
 export const deleteAppointment = async (

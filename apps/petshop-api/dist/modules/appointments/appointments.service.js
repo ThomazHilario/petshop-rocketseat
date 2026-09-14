@@ -11,53 +11,61 @@ const common_1 = require("@nestjs/common");
 const prisma_1 = require("../../prisma");
 let AppointmentsService = class AppointmentsService {
     async createAppointment(data) {
-        return prisma_1.prisma.appointment.create({
-            data
+        const isExistAppointment = await prisma_1.prisma.appointment.findFirst({
+            where: {
+                date: data.date,
+            },
+        });
+        if (isExistAppointment) {
+            throw new common_1.HttpException('Este horário está indisponível!', common_1.HttpStatus.CONFLICT);
+        }
+        return await prisma_1.prisma.appointment.create({
+            data,
         });
     }
     async findAllAppointment() {
         const appointments = await prisma_1.prisma.appointment.findMany();
         return {
             appointments,
-            total: appointments.length
+            total: appointments.length,
         };
     }
     async updateAppointment(data) {
-        try {
-            await prisma_1.prisma.appointment.update({
-                data,
-                where: {
-                    id: data.id
-                }
-            });
-            return {
-                message: "Updated appointment successfully",
-                status: common_1.HttpStatus.OK
-            };
+        const isExistAppointment = await prisma_1.prisma.appointment.findFirst({
+            where: {
+                date: data.date,
+            },
+        });
+        if (isExistAppointment) {
+            throw new common_1.HttpException('Este horário está indisponível!', common_1.HttpStatus.CONFLICT);
         }
-        catch (error) {
-            return {
-                message: "Appointment not found",
-                status: common_1.HttpStatus.NOT_FOUND
-            };
-        }
+        await prisma_1.prisma.appointment.update({
+            data,
+            where: {
+                id: data.id,
+            },
+        });
+        return {
+            message: 'Updated appointment successfully',
+            status: common_1.HttpStatus.OK,
+        };
     }
     async deleteAppointment(id) {
         try {
             await prisma_1.prisma.appointment.delete({
                 where: {
-                    id
-                }
+                    id,
+                },
             });
             return {
-                message: "Appointment deleted successfully",
-                status: common_1.HttpStatus.OK
+                message: 'Appointment deleted successfully',
+                status: common_1.HttpStatus.OK,
             };
         }
         catch (error) {
             return {
-                message: "Appointment not found",
-                status: common_1.HttpStatus.NOT_FOUND
+                message: 'Appointment not found',
+                status: common_1.HttpStatus.NOT_FOUND,
             };
         }
     }

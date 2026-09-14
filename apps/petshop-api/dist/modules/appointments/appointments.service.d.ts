@@ -1,22 +1,22 @@
-import { HttpStatus } from "@nestjs/common";
-import { CreateAppointmentDto, UpdateAppointmentDto } from "./dtos";
+import { HttpStatus } from '@nestjs/common';
+import { CreateAppointmentDto, UpdateAppointmentDto } from './dtos';
 export declare class AppointmentsService {
     createAppointment(data: CreateAppointmentDto): Promise<{
+        id: string;
         petName: string;
         tutorName: string;
         phone: string;
         service: string;
         date: Date;
-        id: string;
     }>;
     findAllAppointment(): Promise<{
         appointments: {
+            id: string;
             petName: string;
             tutorName: string;
             phone: string;
             service: string;
             date: Date;
-            id: string;
         }[];
         total: number;
     }>;
