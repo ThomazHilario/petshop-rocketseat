@@ -12,10 +12,8 @@ export const useUpdateAppointment = () => {
       toast.success('Serviço atualizado com sucesso!');
       queryClient.invalidateQueries({ queryKey: ['appointments'] });
     },
-    onError: () => {
-      toast.error(
-        'Não foi possível atualizar o sserviço. Tente novamente mais tarde!',
-      );
+    onError: (error) => {
+      toast.error(error.message);
     },
   });
 };
