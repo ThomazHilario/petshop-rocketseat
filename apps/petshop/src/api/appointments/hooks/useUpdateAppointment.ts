@@ -1,6 +1,7 @@
+import { isAxiosError } from 'axios';
+import { toast } from 'sonner';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { updateAppointment } from '../endpoints';
-import { toast } from 'sonner';
 
 export const useUpdateAppointment = () => {
   const queryClient = useQueryClient();
@@ -13,7 +14,14 @@ export const useUpdateAppointment = () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] });
     },
     onError: (error) => {
-      toast.error(error.message);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+        return;
+      }
+
+      toast.error(
+        'Não foi possível atualizar o seu agendamento no momento. Tente novamente mais tarde!',
+      );
     },
   });
 };
