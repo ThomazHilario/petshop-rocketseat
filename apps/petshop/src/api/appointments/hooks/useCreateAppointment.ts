@@ -1,7 +1,7 @@
+import { isAxiosError } from 'axios';
 import { toast } from 'sonner';
-import { postAppointment } from '../endpoints';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import axios from 'axios';
+import { postAppointment } from '../endpoints';
 
 export const useCreateAppointment = () => {
   const queryClient = useQueryClient();
@@ -14,7 +14,14 @@ export const useCreateAppointment = () => {
       queryClient.invalidateQueries({ queryKey: ['appointments'] });
     },
     onError: (error) => {
-      toast.error(error.message);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+        return;
+      }
+
+      toast.error(
+        'Não foi possível criar o seu agendamento no momento. Tente novamente mais tarde!',
+      );
     },
   });
 };

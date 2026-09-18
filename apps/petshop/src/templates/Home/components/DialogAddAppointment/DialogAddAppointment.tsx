@@ -64,7 +64,7 @@ export const DialogAddAppointment = () => {
         date: dateFormat(data.date, data.time),
       },
       {
-        onSettled: () => {
+        onSuccess: () => {
           form.reset(APPOINTMENT_DEFAULT_VALUES);
           handleClose();
         },
